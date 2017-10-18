@@ -8,6 +8,7 @@ using System.Data;
 using UnityEngine;
 
 public class XMLReader : MonoBehaviour {
+    // XML read part //
     public string path;
     public DataTable db = new DataTable();
 
