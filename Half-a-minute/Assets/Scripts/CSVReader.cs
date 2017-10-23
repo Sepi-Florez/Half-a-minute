@@ -9,7 +9,6 @@ public class CSVReader : MonoBehaviour {
 
     public string path;
     public List<string[]> DatabaseList = new List<string[]>();
-
     public string all;
 
     
@@ -17,6 +16,7 @@ public class CSVReader : MonoBehaviour {
     private void Start() {
         reader = this;
         Load();
+        Read();
     }
     private void Load() {
         StreamReader file;
@@ -36,8 +36,16 @@ public class CSVReader : MonoBehaviour {
             }
             else {
                 newWordList.Add(newWord);
+                print(newWord);
+                newWord = "";
                 fails++;
+                if(fails == 2) {
+                    DatabaseList.Add(newWordList.ToArray());
+                    newWordList.Clear();
+                    fails = 0;
+                }
             }
         }
     }
+
 }
