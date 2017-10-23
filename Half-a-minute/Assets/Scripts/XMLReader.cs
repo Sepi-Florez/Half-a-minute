@@ -10,7 +10,7 @@ using UnityEngine;
 public class XMLReader : MonoBehaviour {
     // XML read part //
     public string path;
-    public DataTable db = new DataTable();
+    public List<string> db = new List<string>();
 
     private void Start() {
         Load();
@@ -27,10 +27,10 @@ public class XMLReader : MonoBehaviour {
         }
     }
     //Deserializes the given XML file and returns it as a DataTable;
-    DataTable Deserialize(TextAsset xmlFile) {
-        XmlSerializer serializer = new XmlSerializer(typeof(DataTable));
+    List<string> Deserialize(TextAsset xmlFile) {
+        XmlSerializer serializer = new XmlSerializer(typeof(List<string>));
         using (System.IO.StringReader reader = new System.IO.StringReader(xmlFile.text)) {
-            return serializer.Deserialize(reader) as DataTable;
+            return serializer.Deserialize(reader) as List<string>;
         }
     }
 }
