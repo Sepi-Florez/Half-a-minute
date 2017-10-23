@@ -20,7 +20,7 @@ public class CSVReader : MonoBehaviour {
     }
     private void Load() {
         StreamReader file;
-        file = File.OpenText(Application.dataPath + path);
+        file = File.OpenText("path");
         while (!file.EndOfStream) {
             all += file.ReadLine();
         }
