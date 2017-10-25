@@ -14,7 +14,7 @@ public class CSVReader : MonoBehaviour {
 
     
 
-    private void Start() {
+    private void Awake() {
         reader = this;
         Load();
         Read();
@@ -22,6 +22,7 @@ public class CSVReader : MonoBehaviour {
     private void Load() {
         TextAsset file = Resources.Load(path) as TextAsset;
         all = file.text;
+
         /*StreamReader file;
         file = File.OpenText(GetPath());
         while (!file.EndOfStream) {
@@ -35,35 +36,32 @@ public class CSVReader : MonoBehaviour {
         string newWord = "";
         int fails = 0;
         for(int i = 0; i < all.Length; i++) {
+            if (all[i].Equals('\n')) {
+                continue;
+            }
             if (all[i] != ","[0]) {
                 newWord += all[i];
+                fails = 0;
             }
-            else {
-                newWordList.Add(newWord);
-                print(newWord);
-                newWord = "";
+            else{
                 fails++;
-                if(fails == 2) {
+                if (fails > 2) {
+                    continue;
+                }
+                else if(fails == 2){
                     DatabaseList.Add(newWordList.ToArray());
                     newWordList.Clear();
-                    fails = 0;
+                    //print("NEw list!");
+                    continue;
+                }
+                else if(newWord != "" || newWord!=" ") { 
+                    newWordList.Add(newWord);
+                    //print(newWord);
+                    newWord = "";
+
                 }
             }
         }
-    }
-    private string GetPath() {
-
-
-#if UNITY_STANDALONE
-
-        return Application.dataPath + path;
-
-#endif
-
-#if UNITY_ANDROID || UNITY_IOS
-
-        return Application.persistentDataPath + path;
-#endif
     }
 
 }
