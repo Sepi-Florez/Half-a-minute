@@ -11,7 +11,8 @@ public class CategoryHelper : MonoBehaviour {
     public void Selected() {
         anim.SetBool("Selected", !anim.GetBool("Selected"));
     }
-    public void Fill(string category) {
+    public void Fill(string category, int i) {
         transform.GetChild(1).GetComponent<Text>().text = category;
+        transform.GetComponent<Button>().onClick.AddListener(() => CategorySelection.thisManager.toggleCategory(i));
     }
 }

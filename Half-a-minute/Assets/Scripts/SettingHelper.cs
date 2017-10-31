@@ -12,8 +12,10 @@ public class SettingHelper : MonoBehaviour {
     public bool mySwitch;
 
 
-    public void Start() {
+    public void Awake() {
         counter = transform.GetComponentInChildren<InputField>();
+        if(counter != null)
+            myCounter = Convert.ToInt32(counter.text);
     }
     public void CounterIncrease(int i) {
         myCounter += i;

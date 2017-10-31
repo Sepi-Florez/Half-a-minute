@@ -8,7 +8,7 @@ public class CSVReader : MonoBehaviour {
 
 
     public string path;
-    public List<string[]> DatabaseList = new List<string[]>();
+    public static List<List<string>> databaseList = new List<List<string>>();
     public string all;
 
 
@@ -18,6 +18,7 @@ public class CSVReader : MonoBehaviour {
         reader = this;
         Load();
         Read();
+        print("The database I created has " + databaseList.Count + " Categories and " + databaseList[0].Count + " in the first category");
     }
     private void Load() {
         TextAsset file = Resources.Load(path) as TextAsset;
@@ -49,8 +50,10 @@ public class CSVReader : MonoBehaviour {
                     continue;
                 }
                 else if(fails == 2){
-                    DatabaseList.Add(newWordList.ToArray());
+                    databaseList.Add(ConvertList<string>(newWordList));
+                    //print("The previous category added has : " + databaseList[databaseList.Count - 1].Count);
                     newWordList.Clear();
+                    //print("but now has " + databaseList[databaseList.Count - 1].Count);
                     //print("NEw list!");
                     continue;
                 }
@@ -62,6 +65,12 @@ public class CSVReader : MonoBehaviour {
                 }
             }
         }
+    }
+    public  List<string> ConvertList<T>(List<string> convertable) {
+        List<string> ret = new List<string>();
+        foreach (string transgender in convertable)
+            ret.Add(transgender);
+        return ret;
     }
 
 }
