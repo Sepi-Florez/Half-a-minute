@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour {
         if(!timer){
             timer = true;
             Reset();
-            timerLoop = StartCoroutine(Time());
+            //timerLoop = StartCoroutine(Time());
         }
         else{
             timer = false;
@@ -27,7 +27,34 @@ public class Timer : MonoBehaviour {
         }
 
     }
-    public IEnumerator Time() {
+    public void CountDown() {
+        time -= Time.deltaTime;
+        if (time <= 0) {
+            timer = false;
+            timerImag.fillAmount = 0;
+            time2 = 0;
+            timerText.text = "0";   
+
+        }
+        timeExpended += Time.deltaTime;
+        timerImag.fillAmount -= Time.deltaTime;
+        if(timeExpended >= 1) {
+            timerImag.fillAmount = 1.0f;
+            time2--;
+            timerText.text = time2.ToString();
+            timeExpended = 0;
+        }
+        
+    }
+    public void Update() {
+        if (timer) {
+            CountDown();
+        }
+    }
+    public void EndTimer() {
+        print("Hary has no timer");
+    } 
+    /*public IEnumerator Time() {
         while (timer) {
             yield return new WaitForSeconds(0.01f);
             timerImag.fillAmount -= 0.01f;
@@ -44,7 +71,7 @@ public class Timer : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
     public void RefreshButton() {
         if (timer) {
             ButtonText.text = "Stop Timer";
