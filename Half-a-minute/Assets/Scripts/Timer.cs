@@ -15,10 +15,17 @@ public class Timer : MonoBehaviour {
     float timeExpended;
 
     Coroutine timerLoop;
+    public void Start() {
+        Reset();
+    }
+
     public void TimerToggle() {
         if(!timer){
-            timer = true;
-            Reset();
+            if (time != 0) {
+                timer = true;
+                RefreshButton();
+            }
+
             //timerLoop = StartCoroutine(Time());
         }
         else{
@@ -30,11 +37,12 @@ public class Timer : MonoBehaviour {
     public void CountDown() {
         time -= Time.deltaTime;
         if (time <= 0) {
+            time = 0;
             timer = false;
             timerImag.fillAmount = 0;
             time2 = 0;
-            timerText.text = "0";   
-
+            timerText.text = "0";
+            EndTimer();
         }
         timeExpended += Time.deltaTime;
         timerImag.fillAmount -= Time.deltaTime;
@@ -52,6 +60,7 @@ public class Timer : MonoBehaviour {
         }
     }
     public void EndTimer() {
+        SoundManager.thisManager.PlaySound();
         print("Hary has no timer");
     } 
     /*public IEnumerator Time() {
@@ -74,17 +83,23 @@ public class Timer : MonoBehaviour {
     }*/
     public void RefreshButton() {
         if (timer) {
-            ButtonText.text = "Stop Timer";
+            ButtonText.text = "Pause Timer";
         }
         else {
             ButtonText.text = "Start Timer";
         }
     }
     public void Reset() {
+        if (timer) {
+            timer = false;
+        }
         time = SettingsManager.thisManager.mySettings[1].myCounter;
+        print(time);
+        timeExpended = 0;
         time2 = time;
         timerText.text = time.ToString();
         RefreshButton();
         timerImag.fillAmount = 1.0f;
+
     }
 }
